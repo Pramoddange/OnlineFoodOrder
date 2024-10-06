@@ -45,5 +45,11 @@ public class IngredientController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public String deleteIngredients(@PathVariable long id)throws Exception{
+        ingredientsService.delete(id);
+        return "delete successfully "+id;
+    }
+
 
 }

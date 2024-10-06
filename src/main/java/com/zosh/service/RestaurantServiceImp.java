@@ -38,7 +38,8 @@ public class RestaurantServiceImp implements RestaurantService {
                                                         .name(req.getName())
                                                                 .openingHours(req.getOpningHours())
                                                                         .registrationDate(LocalDateTime.now())
-                                                                                .Owner(user)
+                                                                                .owner(user)
+                                                                                 .open(true)
                                                                                  .build();
 
         return restaurantRepository.save(restaurant);
@@ -101,7 +102,7 @@ public class RestaurantServiceImp implements RestaurantService {
 
         RestaurantDto  restaurantDto=new RestaurantDto();
         restaurantDto.setDescription(restaurant.getDescription());
-        restaurantDto.setImage(restaurant.getImages());
+        restaurantDto.setImages(restaurant.getImages());
         restaurantDto.setTitle(restaurant.getName());
         restaurantDto.setId(restaurant.getId());
 

@@ -26,6 +26,7 @@ public class FoodServiceImp implements FoodService {
                                 .description(req.getDescription())
                                         .name(req.getName())
                                                 .price(req.getPrice())
+                                                    .images(req.getImages())
                                                         .ingredients(req.getIngredients())
                                                                 .isSeasonal(req.isSeasional())
                                                                         .isVegetarian(req.isVegetarian())

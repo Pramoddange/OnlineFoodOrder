@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImp implements OrderService {
@@ -74,27 +76,51 @@ public class OrderServiceImp implements OrderService {
         createOrder.setTotalPrice(totalPrice);
 
         Order saveOrder=orderRepository.save(createOrder);
-        restaurant
-        return null;
+         restaurant.getOrders().add(saveOrder);
+        return createOrder;
     }
 
     @Override
     public Order updateOrder(Long orderId, String orderStatus) throws Exception {
-        return null;
+        Order order=findOrderById(orderId);
+        if(orderStatus.equals("OUT_FRO_DELIVERY")
+                ||orderStatus.equals("DELIVERED")
+                ||orderStatus.equals("COMPLETED")
+                ||orderStatus.equals("PENDING")){
+            order.setOrderStatus(orderStatus);
+            return orderRepository.save(order);
+        }
+        throw new Exception("Please select a valid order status");
+
     }
 
     @Override
     public void cancelOrder(Long orderId) throws Exception {
-
+     Order order=findOrderById(orderId);
+     orderRepository.deleteById(orderId);
     }
 
     @Override
     public List<Order> getUserOrder(Long userId) throws Exception {
-        return null;
+
+        return orderRepository.findByCustomerId(userId);
     }
 
     @Override
     public List<Order> getRestaurantOrder(Long restaurantId, String orderStatus) throws Exception {
-        return null;
+        List<Order> orders=orderRepository.findByRestaurantId(restaurantId);
+        if(orderStatus!=null){
+            orders=orders.stream().filter(order->order.getOrderStatus().equals(orderStatus)).collect(Collectors.toList());
+        }
+        return orders;
+    }
+
+    @Override
+    public Order findOrderById(Long id) throws Exception {
+        Optional<Order> optionalOrder=orderRepository.findById(id);
+        if(optionalOrder.isEmpty()){
+            throw new Exception("order not found");
+        }
+        return optionalOrder.get();
     }
 }

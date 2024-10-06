@@ -82,4 +82,11 @@ public class IngredientServiceImp implements IngredientsService {
 
         return ingredientItemRepository.save(ingredientsItem);
     }
+
+    @Override
+    public void delete(Long id) throws Exception {
+        ingredientItemRepository.deleteById(id);
+    }
+
+
 }

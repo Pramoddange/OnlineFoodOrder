@@ -22,7 +22,7 @@ public class Restaurant {
     private  Long id;
 
     @OneToOne
-    private User Owner;
+    private User owner;
 
     private String name;
 
@@ -47,7 +47,7 @@ public class Restaurant {
 
     private LocalDateTime registrationDate;
 
-    private boolean open;
+    private boolean open=true;
 
     @JsonIgnore
     @OneToMany(mappedBy = "restaurant",cascade = CascadeType.ALL)
